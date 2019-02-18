@@ -1,3 +1,6 @@
+Boolean ISMASTER = BRANCH_NAME == "master" ? true : false
+String cronTrigger = ISMASTER ? 'H H(0-2) * * *' : ''
+
 pipeline {
   agent none
   options {
@@ -5,6 +8,7 @@ pipeline {
     disableConcurrentBuilds()
     buildDiscarder(logRotator(numToKeepStr: '50', artifactNumToKeepStr: '50'))
   }
+  triggers { cron(cronTrigger) }
   parameters {
     booleanParam(name: 'ReleaseBuild', defaultValue: false, description: 'Should release the built platform')
   }

@@ -52,7 +52,12 @@ void LIBUSB_CALL onPollFDRemoved(int fd, void *user_data){
 uv_thread_t usb_thread;
 
 void USBThreadFn(void*){
-	while(1) libusb_handle_events(usb_context);
+	while(1) {
+		const int rv = libusb_handle_events(usb_context);
+		 if (rv != LIBUSB_SUCCESS) {
+			 DEBUG_LOG("HANDLE EVENTS FALID event %d\n", rv);
+		 }
+	}
 }
 #endif
 

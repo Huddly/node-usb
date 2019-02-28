@@ -44,6 +44,10 @@ NAN_METHOD(Transfer_constructor) {
 	info.GetReturnValue().Set(info.This());
 }
 
+NAN_METHOD(Transfer_Free) {
+	ENTER_METHOD(Transfer, 0);
+	libusb_free_transfer(self->transfer);
+}
 // Transfer.submit(buffer, callback)
 NAN_METHOD(Transfer_Submit) {
 	ENTER_METHOD(Transfer, 1);
@@ -151,6 +155,7 @@ void Transfer::Init(Local<Object> target){
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	Nan::SetPrototypeMethod(tpl, "submit", Transfer_Submit);
+	Nan::SetPrototypeMethod(tpl, "free", Transfer_Free);
 	Nan::SetPrototypeMethod(tpl, "cancel", Transfer_Cancel);
 
 	target->Set(Nan::New("Transfer").ToLocalChecked(), tpl->GetFunction());

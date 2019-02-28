@@ -28,6 +28,8 @@
         '-std=c++0x'
       ],
       'defines': [
+        'DEBUG',
+        '_DEBUG',
         '_FILE_OFFSET_BITS=64',
         '_LARGEFILE_SOURCE',
         'HAVE_STRUCT_TIMESPEC=1',

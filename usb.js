@@ -421,12 +421,13 @@ InEndpoint.prototype.transfer = function(length, cb){
 	var self = this
 	var buffer = Buffer.alloc(length)
 
-	function callback(error, buf, actual){
-		cb.call(self, error, buffer.slice(0, actual))
-	}
-
 	try {
-		this.makeTransfer(this.timeout, callback).submit(buffer)
+		function callback(error, buf, actual){
+			transfer.free();
+			cb.call(self, error, buffer.slice(0, actual))
+		}
+		const transfer = this.makeTransfer(this.timeout, callback);
+		transfer.submit(buffer)
 	} catch (e) {
 		process.nextTick(function() { cb.call(self, e); });
 	}
@@ -487,14 +488,17 @@ OutEndpoint.prototype.transfer = function(buffer, cb){
 		buffer = Buffer.from(buffer)
 	}
 
-	function callback(error, buf, actual){
-		if (cb) cb.call(self, error)
-	}
+
 
 	try {
-		this.makeTransfer(this.timeout, callback).submit(buffer);
+		function callback(error, buf, actual){
+			transfer.free();
+			if (cb) cb.call(self, error)
+		}
+		const transfer = this.makeTransfer(this.timeout, callback);
+		transfer.submit(buffer);
 	} catch (e) {
-		process.nextTick(function() { callback(e); });
+		process.nextTick(function() { cb.call(self, e); });
 	}
 
 	return this;

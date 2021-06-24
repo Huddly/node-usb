@@ -3,7 +3,7 @@
   "description": "Library to access USB devices",
   "version": "1.5.4",
   "engines": {
-    "node": ">=6"
+    "node": ">=11"
   },
   "keywords": [
     "usb",
@@ -30,7 +30,7 @@
     "url": "https://github.com/tessel/node-usb.git"
   },
   "scripts": {
-    "build": "prebuildify --strip --target=node@7.10.0 --target=node@11.5.0 --target=node@10.12.0 --target=node@8.9.4 --target=electron@1.8.2 --target=electron@3.0.0 --target=electron@4.0.4",
+    "build": "prebuildify --strip --target=node@11.5.0 --target=node@10.12.0--target=node@16.4.0 --target=electron@1.8.2 --target=electron@3.0.0 --target=electron@4.0.4",
     "build_debug": "prebuildify --target=node@8.9.4 --debug",
     "configure_osx": "node-gyp configure -- -f xcode",
     "install": "node-gyp-build",
@@ -47,10 +47,9 @@
     "remote_path": "{version}",
     "builtVersions": {
       "node": [
-        "7.10.0",
-        "8.9.4",
+        "10.12.0",
         "11.5.0",
-        "10.12.0"
+        "16.4.0"
       ],
       "electron": [
         "1.8.2",
@@ -60,10 +59,9 @@
     },
     "builtABIs": {
       "node": [
-        "51",
-        "57",
         "64",
-        "67"
+        "67",
+        "93"
       ],
       "electron": [
         "57",
